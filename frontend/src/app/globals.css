@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+:root {
+  --text: #16253d;
+  --muted: #546782;
+  --panel: rgba(255,255,255,.71);
+  --stroke: rgba(76,117,164,.19);
+  --canvas: #eff6ff;
+  color-scheme: light;
+}
+.dark {
+  --text: #eef6ff;
+  --muted: #a4bbd1;
+  --panel: rgba(15,29,51,.62);
+  --stroke: rgba(169,206,255,.13);
+  --canvas: #071426;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  color: var(--text);
+  background: var(--canvas);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Arial, sans-serif;
+  min-height: 100vh;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: rgba(56,189,248,.35); }
+.glass-panel { background: var(--panel); border: 1px solid var(--stroke); box-shadow: 0 18px 58px rgba(9, 30, 60, .08), inset 0 1px 0 rgba(255,255,255,.09); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); }
+.dark .glass-panel { box-shadow: 0 20px 60px rgba(0,0,0,.21), inset 0 1px 0 rgba(255,255,255,.035); }
+.weather-ambient { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
+.weather-ambient::before, .weather-ambient::after { content: ""; position: absolute; border-radius: 50%; filter: blur(85px); opacity:.52; animation: drift 24s ease-in-out infinite alternate; }
+.weather-ambient::before { width: 550px; height: 550px; top: -210px; left: 2%; background: #57c7f0; }
+.weather-ambient::after { width: 580px; height: 580px; top: 140px; right: -240px; background: #8894f5; animation-duration: 29s; }
+.dark .weather-ambient::before { opacity: .16; }
+.dark .weather-ambient::after { opacity: .22; }
+@keyframes drift { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(70px,50px,0) scale(1.15); } }
+.card-kicker { font-size: .7rem; letter-spacing: .19em; text-transform: uppercase; font-weight: 800; color: var(--muted); }
+.muted { color: var(--muted); }
+.cloud-dot { display: inline-block; height: 7px; width: 7px; border-radius: 999px; background: #34d399; box-shadow: 0 0 0 4px rgba(52,211,153,.13); }
+:focus-visible { outline: 2px solid #0ea5e9; outline-offset: 3px; }
+@media(prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }

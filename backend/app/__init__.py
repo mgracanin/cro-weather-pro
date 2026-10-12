@@ -1,0 +1,1 @@
+"""CroWeather API package."""
