@@ -15,3 +15,8 @@ coverage/
 *.tsbuildinfo
 .coverage
 htmlcov/
+
+# Local coding-agent instructions and prompts
+AGENTS.md
+CLAUDE.md
+PROJECT_PROMPT.md
