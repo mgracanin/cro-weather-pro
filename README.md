@@ -1,14 +1,14 @@
 # CroWeather Pro
 
-**A premium Croatia-only weather dashboard demonstrating WSL Containers (`wslc`) on Windows — no Docker Desktop.**
+A weather dashboard for Croatia, using DHMZ observations and WSL Containers (`wslc`) on Windows.
 
-Modern Next.js App Router + FastAPI + Redis. Live observed weather from the Croatian Meteorological and Hydrological Service (DHMZ). Type-safe APIs, browser geolocation, fuzzy town search, 21 county polygons, nearest-station selection and actual observation history.
+Built with Next.js App Router, FastAPI and Redis. Features include place search, browser geolocation, a county map, nearest-station selection and a history of observations collected by the application.
 
 > Weather values are **actual station observations**, never invented weather for the selected town. Data may be absent, delayed or stale. This is not a forecast or safety-critical alert service.
 
 ## Quick start (Windows 11)
 
-**Requirements:** Windows 11; WSL 2.9.3 or later, `wslc.exe`; PowerShell 5.1 or 7+; an Internet connection for image builds, GeoNames, geoBoundaries, and the DHMZ feed. Docker Desktop is **not** installed or required.
+**Requirements:** Windows 11; WSL 2.9.3 or later, `wslc.exe`; PowerShell 5.1 or 7+; an Internet connection for image builds, GeoNames, geoBoundaries, and the DHMZ feed. Docker Desktop is not required.
 
 ```powershell
 wsl --update
@@ -40,11 +40,11 @@ wslc container logs cro-weather-web
 
 ## What the application does
 
-1. Fetches `https://vrijeme.hr/hrvatska1_n.xml`, safely parses the `Grad`/`Podatci` structure, and stores current data in Redis for 60 seconds. A cached last-good snapshot can survive feed outages for up to 24h, clearly labelled **stale**.
+1. Fetches `https://vrijeme.hr/hrvatska1_n.xml`, parses the `Grad`/`Podatci` structure, and stores current data in Redis for 60 seconds. A cached last-good snapshot can survive feed outages for up to 24h, clearly labelled **stale**.
 2. Stores deduplicated real weather observations by station in Redis (maximum 96 points / 14 days per station); historical charts do not fabricate 60-second measurements. The DHMZ feed is updated approximately hourly, even if the app checks every minute.
 3. Indexes Croatia's settlements, cities and municipalities via GeoNames, with diacritic-insensitive fuzzy search, and resolves each requested location to the nearest geocoded **reporting** station using Haversine distance.
-4. Displays interactive county polygons sourced from geoBoundaries gbOpen ADM1, alongside station markers, hover/focus/click, zoom and smooth selection.
-5. Supports accessible UI controls, theme switching, responsive layout, and browser geolocation (automatic only when previously permitted).
+4. Displays interactive county polygons sourced from geoBoundaries gbOpen ADM1, alongside station markers, hover/focus/click, zoom and selection.
+5. Includes keyboard controls, theme switching, responsive layouts and browser geolocation (automatic only when previously permitted).
 
 ## API endpoints
 
@@ -85,7 +85,7 @@ For local Next.js, API requests route through `http://127.0.0.1:8000` unless `AP
 
 - Fail closed on missing source data: no fake samples, fake forecasts, or silent geographic assumptions.
 - Station coordinates are resolved first from the government’s 2026 official station-location register, then explicitly known station aliases and GeoNames. Stations with unresolved coordinates remain visible in API data but cannot be used for nearest-neighbour calculations. Check your deployment's coverage after first fetch.
-- The dashboard is a showcase/development deployment. Redis persistence and internal service networking work on a single Windows workstation. **Do not expose this stack directly to the public Internet** without a TLS reverse proxy, auth where needed, rate limits, monitoring, tested backup/restore, and resilient deployment orchestration.
+- The dashboard is intended for local development and demonstrations. Redis persistence and internal service networking work on a single Windows workstation. **Do not expose this stack directly to the public Internet** without a TLS reverse proxy, auth where needed, rate limits, monitoring, tested backup/restore, and resilient deployment orchestration.
 - `wslc` currently has no built-in Compose parity or production cluster failover; service lifecycle is explicitly scripted.
 - Lighthouse 90+ is a target and has not been verified in this environment. Run Lighthouse on a fully launched production build.
 

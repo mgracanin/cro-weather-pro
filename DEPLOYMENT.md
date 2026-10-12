@@ -60,8 +60,8 @@ Invoke-RestMethod http://localhost:8000/api/health
 - No map — ensure the frontend build ran `npm run geo:sync` and retrieved geoBoundaries county polygons.
 - No chart trend — history begins when the deployed instance first receives real observations; the feed itself does not publish minute-by-minute station observations.
 - No station near requested locality — inspect station coordinate metadata; unresolved station names remain in station list but cannot be used in the nearest-neighbour index.
-- `wslc` does not have Compose or Docker Desktop's graphical dashboards; scripts provide deterministic container lifecycle for this workstation demonstration.
+- `wslc` does not have Compose or Docker Desktop's graphical dashboards; scripts build, start and stop the containers on the workstation.
 
 ## Production considerations
 
-The stack is a single-host showcase. For public deployment add an ingress with TLS, rate limiting and WAF, redundant Redis/backup, error reporting, alerts, and an orchestrator with health-based restart behavior. Protect Prometheus metrics and internal API endpoints at the edge. Test disaster recovery, container state and image supply-chain vulnerabilities before exposing this to external users.
+The stack runs on a single host and is intended for local demonstrations. For public deployment add an ingress with TLS, rate limiting and WAF, redundant Redis/backup, error reporting, alerts, and an orchestrator with health-based restart behavior. Protect Prometheus metrics and internal API endpoints at the edge. Test disaster recovery, container state and image supply-chain vulnerabilities before exposing this to external users.

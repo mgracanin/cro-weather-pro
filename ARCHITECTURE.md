@@ -6,7 +6,7 @@
 Windows 11 / Microsoft WSL Containers (wslc)
 
    Browser :3000
-       │  HTTPS-ready Next.js frontend
+       │  Next.js frontend
        ▼
   Next.js 15 App Router (cro-weather-web)
        │ SSR + same-origin /api proxy
@@ -23,7 +23,7 @@ Windows 11 / Microsoft WSL Containers (wslc)
 
 All three containers share a user-created WSL container bridge network `cro-weather-net`. Only web port 3000 and API port 8000 are forwarded to Windows loopback. Redis is not published. No Docker Engine, daemon, Compose, or Docker Desktop. Images use OCI-style Dockerfiles built with `wslc build`.
 
-## Data guarantees
+## Data handling
 
 - Observations from DHMZ are tagged with the **source timestamp**, while a separate `fetched_at` records when the application last retrieved the feed.
 - Duplicate station/time measurements are not appended to chart series; an hourly feed generates hourly history, not minute-level fictional readings.
