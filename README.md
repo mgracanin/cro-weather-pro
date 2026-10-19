@@ -99,9 +99,7 @@ Read [architecture](docs/ARCHITECTURE.md), [deployment](docs/DEPLOYMENT.md), [da
 
 ## Verification status
 
-The repository includes GitHub Actions checks for backend tests, frontend typechecking, linting, county-data synchronization and a production build. Container runtime verification requires a supported Windows host and is separate from those checks.
-
-During the local repository review on October 12, 2026, `wslc version` returned `3.0.1.0`, but `build-wslc.ps1` failed on the backend image with `ERROR_FILE_NOT_FOUND`. The three-container production runtime and browser acceptance walkthrough have therefore **not been verified**. Backend tests could not run because `pytest` was unavailable; frontend checks could not run because the local npm launcher was broken and dependencies were absent. See [testing](docs/TESTING.md) for the checks to run in a configured environment.
+The repository includes GitHub Actions checks for backend tests, frontend typechecking, linting, county-data synchronization and a production build. Container runtime verification requires a supported Windows host and is separate from those checks. See [testing](docs/TESTING.md) for the checks to run in a configured environment.
 
 
 ## Learn WSL Containers directly (no wrapper scripts)
